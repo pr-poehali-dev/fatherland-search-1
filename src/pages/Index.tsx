@@ -151,7 +151,7 @@ function Index() {
                 <div className="mx-auto h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-2">
                   <Icon name="Users" size={24} className="text-primary" />
                 </div>
-                <CardTitle className="text-3xl">18</CardTitle>
+                <CardTitle className="text-3xl">1000+</CardTitle>
                 <CardDescription>Бойцов найдено</CardDescription>
               </CardHeader>
             </Card>
@@ -160,7 +160,7 @@ function Index() {
                 <div className="mx-auto h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-2">
                   <Icon name="UserCheck" size={24} className="text-primary" />
                 </div>
-                <CardTitle className="text-3xl">2</CardTitle>
+                <CardTitle className="text-3xl">1000</CardTitle>
                 <CardDescription>Личностей установлено</CardDescription>
               </CardHeader>
             </Card>
@@ -169,7 +169,7 @@ function Index() {
                 <div className="mx-auto h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-2">
                   <Icon name="FileText" size={24} className="text-primary" />
                 </div>
-                <CardTitle className="text-3xl">7</CardTitle>
+                <CardTitle className="text-3xl">100+</CardTitle>
                 <CardDescription>Медальонов найдено</CardDescription>
               </CardHeader>
             </Card>
@@ -178,7 +178,7 @@ function Index() {
                 <div className="mx-auto h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-2">
                   <Icon name="Calendar" size={24} className="text-primary" />
                 </div>
-                <CardTitle className="text-3xl">2</CardTitle>
+                <CardTitle className="text-3xl">14</CardTitle>
                 <CardDescription>Экспедиции в 2025</CardDescription>
               </CardHeader>
             </Card>
