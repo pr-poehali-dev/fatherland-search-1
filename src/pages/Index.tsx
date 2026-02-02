@@ -7,6 +7,21 @@ import { Button } from '@/components/ui/button';
 function Index() {
   const [activeSection, setActiveSection] = useState('home');
   const [activeTab, setActiveTab] = useState('expeditions');
+  const [selectedImage, setSelectedImage] = useState<number | null>(null);
+
+  const galleryImages = [
+    { id: 1, title: 'Экспедиция Рогачевский район', location: 'Гомельская область' },
+    { id: 2, title: 'Находка медальонов', location: 'Мостовский район' },
+    { id: 3, title: 'Работа поисковой группы', location: 'Беларусь' },
+    { id: 4, title: 'Идентификация останков', location: 'Полевой лагерь' },
+    { id: 5, title: 'Смертный медальон', location: 'Архив находок' },
+    { id: 6, title: 'Командная работа', location: 'Экспедиция 2025' }
+  ];
+
+  const expeditionLocations = [
+    { name: 'Рогачевский район', coords: '53.0906, 30.0497', date: '25-26.10.2025', found: 4 },
+    { name: 'Мостовский район', coords: '53.4000, 24.5333', date: '11-12.10.2025', found: 14 }
+  ];
 
   const findings = [
     {
@@ -75,12 +90,12 @@ function Index() {
                 <Icon name="Users" size={24} className="text-primary" />
               </div>
               <div>
-                <h1 className="text-xl font-bold">Батькощина</h1>
+                <h1 className="text-xl font-bold">Батьковщина</h1>
                 <p className="text-xs text-muted-foreground">Поисковая группа</p>
               </div>
             </div>
             <nav className="hidden md:flex gap-6">
-              {['home', 'about', 'findings', 'expeditions', 'partners', 'contacts', 'help'].map((section) => (
+              {['home', 'about', 'findings', 'gallery', 'map', 'partners', 'contacts'].map((section) => (
                 <button
                   key={section}
                   onClick={() => setActiveSection(section)}
@@ -91,10 +106,10 @@ function Index() {
                   {section === 'home' && 'Главная'}
                   {section === 'about' && 'О группе'}
                   {section === 'findings' && 'Находки'}
-                  {section === 'expeditions' && 'Экспедиции'}
+                  {section === 'gallery' && 'Галерея'}
+                  {section === 'map' && 'Карта'}
                   {section === 'partners' && 'Партнёры'}
                   {section === 'contacts' && 'Контакты'}
-                  {section === 'help' && 'Помощь'}
                 </button>
               ))}
             </nav>
@@ -115,16 +130,12 @@ function Index() {
               Сохраняем память о защитниках Отечества
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8">
-              Поисковая группа «Батькощина» проводит работы по обнаружению и идентификации останков бойцов и командиров Красной Армии, погибших в 1941 году
+              Поисковая группа «Батьковщина» проводит работы по обнаружению и идентификации останков бойцов и командиров Красной Армии, погибших в 1941 году
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Button size="lg" className="gap-2">
                 <Icon name="Search" size={20} />
                 База находок
-              </Button>
-              <Button size="lg" variant="outline" className="gap-2">
-                <Icon name="Heart" size={20} />
-                Поддержать проект
               </Button>
             </div>
           </div>
@@ -315,7 +326,7 @@ function Index() {
                   <div>
                     <h3 className="font-semibold text-lg mb-2">Наша миссия</h3>
                     <p className="text-muted-foreground">
-                      Поисковая группа «Батькощина» проводит систематические работы по поиску, эксгумации и идентификации останков защитников Отечества, погибших в годы Великой Отечественной войны на территории Беларуси.
+                      Поисковая группа «Батьковщина» проводит систематические работы по поиску, эксгумации и идентификации останков защитников Отечества, погибших в годы Великой Отечественной войны на территории Беларуси.
                     </p>
                   </div>
                 </div>
@@ -375,13 +386,85 @@ function Index() {
         </div>
       </section>
 
-      {/* Contact & Help Section */}
+      {/* Gallery Section */}
       <section className="py-16 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Галерея</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Фотографии с поисковых экспедиций
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {galleryImages.map((image) => (
+              <Card key={image.id} className="hover-scale cursor-pointer overflow-hidden" onClick={() => setSelectedImage(image.id)}>
+                <div className="aspect-video bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
+                  <Icon name="Image" size={48} className="text-primary/30" />
+                </div>
+                <CardContent className="pt-4">
+                  <h3 className="font-semibold mb-1">{image.title}</h3>
+                  <p className="text-sm text-muted-foreground flex items-center gap-1">
+                    <Icon name="MapPin" size={14} />
+                    {image.location}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Map Section */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Карта экспедиций</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Места проведения поисковых работ
+            </p>
+          </div>
+          <div className="max-w-6xl mx-auto">
+            <Card>
+              <CardContent className="p-0">
+                <div className="aspect-video bg-gradient-to-br from-primary/5 to-muted flex items-center justify-center relative overflow-hidden">
+                  <Icon name="Map" size={64} className="text-primary/20 absolute" />
+                  <div className="relative z-10 text-center p-8">
+                    <Icon name="MapPin" size={48} className="text-primary mx-auto mb-4" />
+                    <p className="text-lg font-medium mb-2">Интерактивная карта</p>
+                    <p className="text-sm text-muted-foreground">Места проведения экспедиций на территории Беларуси</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+              {expeditionLocations.map((location, index) => (
+                <Card key={index} className="hover-scale">
+                  <CardContent className="pt-6">
+                    <div className="flex gap-3">
+                      <Icon name="MapPin" size={20} className="text-primary flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="font-medium mb-1">{location.name}</p>
+                        <p className="text-sm text-muted-foreground mb-2">{location.date}</p>
+                        <Badge variant="outline" className="text-xs">
+                          {location.found} бойцов найдено
+                        </Badge>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section className="py-16 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="max-w-2xl mx-auto">
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-center justify-center">
                   <Icon name="Mail" size={24} />
                   Контакты
                 </CardTitle>
@@ -401,24 +484,6 @@ function Index() {
                 </div>
               </CardContent>
             </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Icon name="Heart" size={24} />
-                  Как помочь
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-muted-foreground">
-                  Поисковая работа требует средств на оборудование, транспорт и экспертизу. Ваша поддержка помогает восстанавливать имена героев.
-                </p>
-                <Button className="w-full gap-2">
-                  <Icon name="HandHeart" size={20} />
-                  Поддержать проект
-                </Button>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </section>
@@ -427,7 +492,7 @@ function Index() {
       <footer className="border-t py-8 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center text-sm text-muted-foreground">
-            <p className="mb-2">© 2025 Поисковая группа «Батькощина»</p>
+            <p className="mb-2">© 2025 Поисковая группа «Батьковщина»</p>
             <p>Сохраняем память о защитниках Отечества</p>
           </div>
         </div>
