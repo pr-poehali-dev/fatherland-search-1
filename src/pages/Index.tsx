@@ -3,10 +3,10 @@ import Icon from '@/components/ui/icon';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 function Index() {
   const [activeSection, setActiveSection] = useState('home');
+  const [activeTab, setActiveTab] = useState('expeditions');
 
   const findings = [
     {
@@ -185,14 +185,33 @@ function Index() {
             </p>
           </div>
 
-          <Tabs defaultValue="expeditions" className="max-w-6xl mx-auto">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="expeditions">Экспедиции</TabsTrigger>
-              <TabsTrigger value="identified">Установленные личности</TabsTrigger>
-            </TabsList>
+          <div className="max-w-6xl mx-auto">
+            <div className="flex gap-2 mb-6 border-b">
+              <button
+                onClick={() => setActiveTab('expeditions')}
+                className={`px-4 py-2 font-medium transition-colors border-b-2 -mb-px ${
+                  activeTab === 'expeditions'
+                    ? 'border-primary text-primary'
+                    : 'border-transparent text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                Экспедиции
+              </button>
+              <button
+                onClick={() => setActiveTab('identified')}
+                className={`px-4 py-2 font-medium transition-colors border-b-2 -mb-px ${
+                  activeTab === 'identified'
+                    ? 'border-primary text-primary'
+                    : 'border-transparent text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                Установленные личности
+              </button>
+            </div>
 
-            <TabsContent value="expeditions" className="space-y-4 mt-6">
-              {findings.map((finding) => (
+            {activeTab === 'expeditions' && (
+              <div className="space-y-4">
+                {findings.map((finding) => (
                 <Card key={finding.id} className="hover-scale">
                   <CardHeader>
                     <div className="flex items-start justify-between">
@@ -226,10 +245,12 @@ function Index() {
                   </CardContent>
                 </Card>
               ))}
-            </TabsContent>
+              </div>
+            )}
 
-            <TabsContent value="identified" className="space-y-4 mt-6">
-              {identified.map((person, index) => (
+            {activeTab === 'identified' && (
+              <div className="space-y-4">
+                {identified.map((person, index) => (
                 <Card key={index} className="hover-scale">
                   <CardHeader>
                     <div className="flex items-start justify-between">
@@ -274,8 +295,9 @@ function Index() {
                   </CardContent>
                 </Card>
               ))}
-            </TabsContent>
-          </Tabs>
+              </div>
+            )}
+          </div>
         </div>
       </section>
 
